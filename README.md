@@ -1,0 +1,1 @@
+# wdc-django-views-with-models
