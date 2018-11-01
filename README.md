@@ -7,7 +7,7 @@
 The structure of the whole Django project is built for you. Run the following commands in order to have your local environment up and running.  
 
 ```bash
-$ mkvirtualenv -p $(which python3) django_orm_intro
+$ mkvirtualenv -p $(which python3) django_views_with_modelss
 $ pip install -r requirements.txt
 $ make migrate
 ```
@@ -50,7 +50,7 @@ The context while rendering the template will be the same as before, but now the
 
 #### - Task 3:
 
-In a similar way as done before, check if a `popularity` GET parameter is given in the URL and if so, filter the artists queryset by artists that have a popularity greater or equal to the one given.
+In a similar way as done before, check if a `popularity` GET parameter is given in the URL and if so, filter the artists queryset by artists that have a popularity greater or equal than the given one.
 It should work like this:
 
 <img src="https://user-images.githubusercontent.com/2788551/39497601-7892d2b6-4d7a-11e8-8dfd-b658262a7146.png" width="50%" height="50%">
@@ -63,7 +63,7 @@ NOTE: Notice that you can send multiple GET parameters like this: `/artists?firs
 For this task you'll implement a brand new view under `/artist/<artist_id>` URL. This view will take the given `artist_id`, get the proper Artist object from the database and render the `artist.html` template sending the artist object as context.
 If you want to check what id is associated with each artist, you can do it in the admin page at `/admin/` URL.
 
-<img src="https://user-images.githubusercontent.com/2788551/39497626-9f1ee55a-4d7a-11e8-94fe-b0f81c0e6c14.png" width="50%" height="50%">
+<img src="https://user-images.githubusercontent.com/2788551/47860210-cb620400-ddce-11e8-9a9b-5dd04a2ef78b.png" width="50%" height="50%">
 
 
 #### - Task 5:
@@ -87,4 +87,4 @@ Add a new `/songs/<artist_id>` URL that points to the same `songs()` view. Filte
 Notice that this is NOT a GET parameter, but a parameter that comes in the URL path. So now the `songs()` view takes a new artist_id parameter which by default is set to None.
 Remember that you can check which `id` is associated with each artist object in the Django admin page.
 
-<img src="https://user-images.githubusercontent.com/2788551/39501602-401e5eb0-4d92-11e8-92a8-9fd1d5e3e1cb.png" width="50%" height="50%">
+<img src="https://user-images.githubusercontent.com/2788551/47860340-11b76300-ddcf-11e8-8df2-02ffc2f6f2f6.png" width="50%" height="50%">
