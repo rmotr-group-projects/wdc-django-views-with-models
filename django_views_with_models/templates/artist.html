@@ -1,0 +1,12 @@
+<h3>{{artist.artistic_name}}'s profile:</h3>
+
+
+<ul>
+  <li>First name: {{artist.first_name}}</li>
+  <li>Last name: {{artist.last_name}}</li>
+  <li>popularity: {{artist.popularity}} out of 100</li>
+  <li><a href="{% url 'songs' artist_id=artist.id %}">List of songs</a></li>
+</ul>
+
+
+<img src="{{artist.picture_url}}" alt="" style='width: 25%;'>

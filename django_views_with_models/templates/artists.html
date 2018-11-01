@@ -1,0 +1,7 @@
+<h1>Here's a list of artists:</h1>
+
+<ul>
+  {% for artist in artists %}
+    <li><a href="{% url 'artist' artist_id=artist.id %}">{{artist.artistic_name}}</a> (<i>Popularity: {{artist.popularity}}</i>)</li> 
+  {% endfor %}
+</ul>
