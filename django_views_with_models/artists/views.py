@@ -29,10 +29,6 @@ def artists(request):
     if popularity:
         artists = artists.filter(popularity__gte=popularity)
 
-    genre = request.GET.get('genre')
-    if genre:
-        artists = artists.filter(genre=genre)
-
     return render(request, 'artists.html', context={'artists': artists})
 
 
