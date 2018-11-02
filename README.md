@@ -7,9 +7,8 @@
 The structure of the whole Django project is built for you. Run the following commands in order to have your local environment up and running.  
 
 ```bash
-$ mkvirtualenv -p $(which python3) django_views_with_modelss
+$ mkvirtualenv -p $(which python3) django_views_with_models
 $ pip install -r requirements.txt
-$ make migrate
 ```
 
 You can now run the development server and point the browser to the correct URL:
@@ -18,15 +17,9 @@ You can now run the development server and point the browser to the correct URL:
 $ make runserver
 ```
 
-A command to load some initial data into your database is also provided.
+You will have a superuser already created (username: `admin`, password: `admin`) that you can use when you point to `http://localhost:8080/admin` in your browser with the server running. There you can find the Django admin site where you will be able to create, delete and modify objects from your database.
 
-```bash
-$ make load_initial_data
-```
-
-You should see an `Imported!` message when the command execution finishes. That mean all initial data was imported successfully.
-
-This will also create a superuser (user: `admin`, password: `admin`) that you can use when you point to `http://localhost:8080/admin` in your browser with the server running. You will find the Django admin site where you can create, delete and modify objects from your database.
+The database already contains some objects that we have created for you, but feel free to interact with it the way you want.
 
 
 #### - Task 1:
