@@ -14,6 +14,9 @@ class Artist(models.Model):
     popularity = models.IntegerField()
     genre = models.CharField(choices=GENRE_CHOICES, max_length=255)
 
+    def __str__(self):
+        return self.artistic_name
+
 
 class Song(models.Model):
     artist_id = models.IntegerField()

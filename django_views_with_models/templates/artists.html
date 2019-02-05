@@ -2,6 +2,6 @@
 
 <ul>
   {% for artist in artists %}
-    <li><a href="{% url 'artist' artist_id=artist.id %}">{{artist.artistic_name}}</a> (<i>Popularity: {{artist.popularity}}</i>)</li> 
+    <li><a href="{% url 'artist' artist.id %}">{{artist.artistic_name}}</a> (<i>Popularity: {{artist.popularity}}</i>)</li> 
   {% endfor %}
 </ul>
