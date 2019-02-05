@@ -5,7 +5,7 @@
   <li><b>First name</b>: {{artist.first_name}}</li>
   <li><b>Last name</b>: {{artist.last_name}}</li>
   <li><b>Popularity</b>: {{artist.popularity}} out of 100</li>
-  <li><a href="{% url 'songs' artist_id=artist.id %}">List of songs</a></li>
+  <li><a href="{% url 'songs' artist.id %}">List of songs</a></li>
 </ul>
 
 
