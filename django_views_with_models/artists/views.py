@@ -19,7 +19,17 @@ def artists(request):
         parameter (if its given) and filter all the artists that have a
         popularity greater or equal to the given one.
     """
-    pass
+    artists = Artist.objects.all()
+    name = request.GET['first_name']
+    popularity_score = request.GET['popularity']
+    
+    if name:
+        artists = artists.filter(first_name__icontains=name)
+        
+    if popular:
+        artists = artists.filter(popularity__gte=popularity_score)
+        
+    return render(request,'artists.html',{'artists': artists})
 
 
 def artist(request, artist_id):
