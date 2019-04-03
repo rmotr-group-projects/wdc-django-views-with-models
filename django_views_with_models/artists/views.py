@@ -20,13 +20,13 @@ def artists(request):
         popularity greater or equal to the given one.
     """
     artists = Artist.objects.all()
-    name = request.GET['first_name']
-    popularity_score = request.GET['popularity']
+    name = request.GET.get('first_name')
+    popularity_score = request.GET.get('popularity')
     
     if name:
         artists = artists.filter(first_name__icontains=name)
         
-    if popular:
+    if popularity_score:
         artists = artists.filter(popularity__gte=popularity_score)
         
     return render(request,'artists.html',{'artists': artists})
