@@ -19,7 +19,6 @@ def artists(request):
         parameter (if its given) and filter all the artists that have a
         popularity greater or equal to the given one.
     """
-<<<<<<< HEAD
     artists = Artist.objects.all()
     name = request.GET.get('first_name')
     popularity_score = request.GET.get('popularity')
@@ -29,16 +28,7 @@ def artists(request):
         
     if popularity_score:
         artists = artists.filter(popularity__gte=popularity_score)
-=======
-    artists = Artist.objects.all()        
-    
-    if request.POST.get['first_name']:
-        artists = artists.filter(first_name__icontains=request.POST.get['first_name'])
->>>>>>> 687b8e0b26a5b029282cc960049546006b9c6ab4
         
-    if request.POST.get['popularity']:
-        artists = artists.filter(popularity_score__gte=request.POST.get['popularity'])
-       
     return render(request,'artists.html',{'artists': artists})
 
 
@@ -49,7 +39,7 @@ def artist(request, artist_id):
         the DB. Then render the 'artist.html' template sending the 'artist'
         object as context
     """
-    artist = Artist.objects.filter(song__artist_id=artist_id)
+    artist = Artist.objects.get(id=artist_id)
     return render(request, 'artist.html', {'artist': artist})
 
 
@@ -72,4 +62,4 @@ def songs(request, artist_id=None):
         songs that match with given artist_id and render the same 'songs.html'
         template.
     """
-    pass
+    return render(request, 'songs.html',{'son'})
