@@ -62,4 +62,14 @@ def songs(request, artist_id=None):
         songs that match with given artist_id and render the same 'songs.html'
         template.
     """
-    return render(request, 'songs.html',{'son'})
+    songs = Song.objects.all()
+    for s in songs:
+        singer = Artist.objects.get(id=s.artist_id)
+        s.artist = singer
+        
+    if request.GET:
+        song_title = request.GET.get('title')
+        songs = songs.filter(title__icontains=song_title)
+        
+    
+    return render(request, 'songs.html',{'songs': songs})
