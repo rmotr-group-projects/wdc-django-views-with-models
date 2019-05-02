@@ -20,24 +20,26 @@ def artists(request):
         popularity greater or equal to the given one.
     """
 
+    #task3
     if request.GET.get("popularity"):
         pop = request.GET.get("popularity")
         artists = Artist.objects.filter(popularity__gte = pop)
         return render(request,'artists.html',{'artists':artists})
 
+    #Task 2
     if request.GET.get("first_name"):
         first_name = request.GET.get("first_name")
         artists = Artist.objects.filter(first_name__icontains=first_name)
         return render(request,'artists.html',{'artists':artists})
     
-    #Task1 ok
+    #Task1
     artists = Artist.objects.all()
     return render(request,'artists.html',{'artists':artists})
 
     
 
 
-
+#task4
 def artist(request, artist_id):
     """
         - Task 4: Implement a view under /artists/<artist_id> that takes the
@@ -72,26 +74,27 @@ def songs(request, artist_id=None):
         template.
     """
 
-    #task 5  not working 
+   
     artists = Artist.objects.all()
     songs = Song.objects.all()
     context ={
         'songs':[]
     }
 
+    #Task 6
     if  request.GET.get("title"):
         title = request.GET.get("title")
         songs = Song.objects.filter(title__icontains=title)
        
-
+    #task 5 
     if artist_id:
         
         songs = Song.objects.filter(artist_id=artist_id)
-
+    #task7
     for song in songs:
         for artist in artists:
             if song.artist_id == artist.id:
-                song.artist = artist # check later
+                song.artist = artist 
                 context['songs'].append(song)
     return render(request,'songs.html',context)
 
