@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseNotFound
 
 from .models import Artist, Song
@@ -19,7 +19,16 @@ def artists(request):
         parameter (if its given) and filter all the artists that have a
         popularity greater or equal to the given one.
     """
-    pass
+    artists = Artist.objects.all()
+    fname = request.GET.get('first_name')
+    if fname:
+        artists = artists.filter(first_name__icontains=fname)
+        
+    pop = request.GET.get('popularity')
+    if pop:
+        artists = artists.filter(popularity__gte=pop)
+    
+    return render(request, 'artists.html', {'artists': artists})
 
 
 def artist(request, artist_id):
@@ -29,7 +38,15 @@ def artist(request, artist_id):
         the DB. Then render the 'artist.html' template sending the 'artist'
         object as context
     """
-    pass
+    try:
+        artist = Artist.objects.get(id=artist_id)
+    except Artist.DoesNotExist:
+        return HttpResponseNotFound()
+
+    return render(request, 'artist.html', {
+        'artist': artist
+    })
+    
 
 
 def songs(request, artist_id=None):
@@ -51,4 +68,21 @@ def songs(request, artist_id=None):
         songs that match with given artist_id and render the same 'songs.html'
         template.
     """
-    pass
+    songs = Song.objects.all()
+    
+    if artist_id:
+        songs = songs.filter(artist_id=artist_id)
+    
+    title = request.GET.get('title')
+    if title:
+        songs = songs.filter(title__icontains=title)
+    
+    
+    for song in songs:
+        artist = Artist.objects.get(id=song.artist_id)
+        song.artist = artist
+
+    
+    return render(request, 'songs.html', {'songs': songs})
+    
+    
