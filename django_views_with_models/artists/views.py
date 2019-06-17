@@ -36,7 +36,7 @@ def songs(request, artist_id=None):
             song.artist = Artist.objects.get(id=artist_id)
 
     if request.GET.get('title'):
-    songs =[song for song in songs if song.title==request.GET.get('title')]
+        songs =[song for song in songs if song.title==request.GET.get('title')]
 	
     return render(request,'songs.html',{'songs':songs,})
     
