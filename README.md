@@ -81,3 +81,4 @@ Notice that this is NOT a GET parameter, but a parameter that comes in the URL p
 Remember that you can check which `id` is associated with each artist object in the Django admin page.
 
 <img src="https://user-images.githubusercontent.com/2788551/47860340-11b76300-ddcf-11e8-8df2-02ffc2f6f2f6.png" width="50%" height="50%">
+
