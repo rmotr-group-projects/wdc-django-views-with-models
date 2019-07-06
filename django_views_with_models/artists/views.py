@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseNotFound
 
 from .models import Artist, Song
@@ -19,7 +19,20 @@ def artists(request):
         parameter (if its given) and filter all the artists that have a
         popularity greater or equal to the given one.
     """
-    pass
+    kwargs = {}
+    filter_format = '{0}__{1}'
+
+    first_name = request.GET.get('first_name')
+    if first_name:
+        kwargs[filter_format.format('first_name', 'icontains')] = first_name
+
+    popularity = request.GET.get('popularity')
+    if popularity:
+        kwargs[filter_format.format('popularity', 'gte')] = popularity
+
+    artists_set = Artist.objects.filter(**kwargs)
+    template_data = {'artists': artists_set}
+    return render(request, 'artists.html', template_data)
 
 
 def artist(request, artist_id):
@@ -29,7 +42,8 @@ def artist(request, artist_id):
         the DB. Then render the 'artist.html' template sending the 'artist'
         object as context
     """
-    pass
+    artist = get_object_or_404(Artist, pk=artist_id)
+    return render(request, 'artist.html', {'artist': artist})
 
 
 def songs(request, artist_id=None):
@@ -51,4 +65,20 @@ def songs(request, artist_id=None):
         songs that match with given artist_id and render the same 'songs.html'
         template.
     """
-    pass
+    kwargs = {}
+    filter_format = '{0}__{1}'
+
+    title = request.GET.get('title')
+    if title:
+        kwargs[filter_format.format('title', 'icontains')] = title
+
+    if artist_id:
+        kwargs[filter_format.format('artist_id', 'exact')] = artist_id
+
+    songs = Song.objects.filter(**kwargs)
+    for song in songs:
+        artist = get_object_or_404(Artist, id=song.artist_id)
+        song.artist = artist
+
+    songs_dict = {'songs': songs}
+    return render(request, 'songs.html', songs_dict)
