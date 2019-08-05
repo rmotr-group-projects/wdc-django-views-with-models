@@ -4,6 +4,7 @@ from django.http import HttpResponseNotFound
 from .models import Artist, Song
 
 
+
 def artists(request):
     """
         - Task 1: Implement a view under /artists URL that fetches all
@@ -19,7 +20,14 @@ def artists(request):
         parameter (if its given) and filter all the artists that have a
         popularity greater or equal to the given one.
     """
-    pass
+    artists = Artist.object.all()
+    first_name = requests.GET.get('first_name')
+    popularity = requests.GET.get('popularity')
+    if first_name:
+        artists = artists.filter(first_name__icontains=first_name)
+    if popularity:
+        artists = artists.filter(popularity__gte=popularity)
+    return render(request, 'artists.html', context = {'artists':artists})
 
 
 def artist(request, artist_id):
@@ -29,7 +37,8 @@ def artist(request, artist_id):
         the DB. Then render the 'artist.html' template sending the 'artist'
         object as context
     """
-    pass
+    artist = Artist.object.get(id=artist_id)
+    return render(request, 'artist.html', context={'artist':artist})
 
 
 def songs(request, artist_id=None):
@@ -50,5 +59,12 @@ def songs(request, artist_id=None):
         same view. If the artist_id is given, filter the songs queryset for
         songs that match with given artist_id and render the same 'songs.html'
         template.
-    """
-    pass
+   """ 
+    songs = Song.object.all()
+    title = requests.GET.get('title')
+    if title:
+        songs = songs.filter(title__icontains=title)
+    for song in songs:
+        artist = Artist.object.get(id=song.artist_id)
+        song.artist = artist
+    return render(request, 'songs.html', contect = {'songs':songs})
