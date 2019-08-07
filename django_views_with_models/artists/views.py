@@ -10,6 +10,7 @@ def artists(request):
         Artist's objects stored in the DB and render the 'artists.html'
         template sending all 'artists' as context.
 
+
         - Task 2: In this same view, check if a 'first_name' GET parameter
         is sent. If so, filter the previous queryset with ALL artists, in
         order to keep only the ones that contains the given pattern in its
@@ -19,7 +20,17 @@ def artists(request):
         parameter (if its given) and filter all the artists that have a
         popularity greater or equal to the given one.
     """
-    pass
+    #task1:
+    artists = Artist.objects.all()
+    first_name = request.GET.get('first_name')
+    popularity = request.GET.get('popularity')
+    if first_name:
+        artists = Artist.objects.filter(first_name__icontains=first_name)
+    if popularity:
+        artists = Artist.objects.filter(popularity__gte=popularity)
+    
+    return render(request, "artists.html", context={"artists": artists})
+
 
 
 def artist(request, artist_id):
@@ -29,7 +40,12 @@ def artist(request, artist_id):
         the DB. Then render the 'artist.html' template sending the 'artist'
         object as context
     """
-    pass
+    try:
+        artist = Artist.objects.get(id=artist_id)
+    except Artist.DoesNotExist:
+        return HttpResponseNotFound()
+    return render(request, 'artist.html', context={'artist': artist})
+    
 
 
 def songs(request, artist_id=None):
@@ -51,4 +67,17 @@ def songs(request, artist_id=None):
         songs that match with given artist_id and render the same 'songs.html'
         template.
     """
-    pass
+    songs = Song.objects.all()
+
+    if artist_id:
+        songs = songs.filter(artist_id=artist_id)
+
+    title = request.GET.get('title')
+    if title:
+        songs = songs.filter(title__icontains=title)
+
+    for song in songs:
+        artist = Artist.objects.get(id=song.artist_id)
+        song.artist = artist
+
+    return render(request, 'songs.html', context={'songs': songs})
