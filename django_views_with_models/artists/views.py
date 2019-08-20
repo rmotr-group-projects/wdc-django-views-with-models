@@ -74,11 +74,11 @@ def songs(request, artist_id=None):
     title = request.GET.get('title')
     if title is not None:
         print (title)
-        songs.filter(title__icontains = title)
+        songs = songs.filter(title__icontains = title)
 
-    artist_id = request.GET.get('artist_id')
+    # artist_id = request.GET.get('artist_id')
     if artist_id is not None:
-        songs.filter(artist_id__icontains = artist_id)
+        songs = songs.filter(artist_id__icontains = artist_id)
 
     for song in songs:
         artist = Artist.objects.get(id=song.artist_id)
